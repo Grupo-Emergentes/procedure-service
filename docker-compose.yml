@@ -1,0 +1,40 @@
+version: '3.8'
+services:
+  mysql-procedure:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: Admin123admin
+      MYSQL_DATABASE: procedureservicedb
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mongodb:
+    image: mongo:6.0
+    ports:
+      - "27017:27017"
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  procedure-app:
+    build: ./
+    depends_on:
+      mysql-procedure:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
+    environment:
+      MYSQL_PROCEDURE_DATABASE: mysql-procedure
+      MYSQL_PROCEDURE_PORT: 3306
+      MYSQL_PROCEDURE_USERNAME: root
+      MYSQL_PROCEDURE_PASSWORD: Admin123admin
+      MONGODB_PROCEDURE_DATABASE: mongodb
+      MONGO_PROCEDURE_PORT: 27017
+      PROCEDURE_PORT: 8080
