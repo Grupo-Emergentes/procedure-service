@@ -4,7 +4,7 @@ services:
     image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: Admin123admin
-      MYSQL_DATABASE: procedureservicedb
+      MYSQL_DATABASE: procedureserviceDB # aca debe estar el nombre de la base de datos que sale en el properties y por ende en el servicio externo
     ports:
       - "3307:3306"
     healthcheck:
@@ -38,3 +38,5 @@ services:
       MONGODB_PROCEDURE_DATABASE: mongodb
       MONGO_PROCEDURE_PORT: 27017
       PROCEDURE_PORT: 8080
+    ports:
+      - "8080:8080"
