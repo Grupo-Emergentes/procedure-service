@@ -88,6 +88,21 @@ public class ProcedureController {
     }
 
 
+    @GetMapping("/citizen/{citizenId}")
+    @Operation(
+            summary = "Obtener procedimientos por ID de ciudadano",
+            description = "Obtiene una lista de procedimientos asociados a un ID de ciudadano"
+    )
+    public ResponseEntity<List<ProcedureResource>> getProceduresByCitizenId(
+            @PathVariable int citizenId) {
+        var procedures = procedureQueryService.findByCitizenId(citizenId);
+        if (procedures.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(procedures);
+    }
+
+
     @DeleteMapping("/{procedureId}")
     @Operation(
             summary = "Eliminar procedimiento por ID",

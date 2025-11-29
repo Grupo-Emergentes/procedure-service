@@ -4,7 +4,6 @@ import org.com.inkagob.procedureservice.domain.model.aggregate.Procedure;
 import org.com.inkagob.procedureservice.domain.model.valueobjects.ProcedureState;
 import org.com.inkagob.procedureservice.domain.model.valueobjects.ProcedureType;
 import org.com.inkagob.procedureservice.domain.services.ProcedureQueryService;
-import org.com.inkagob.procedureservice.infrastructure.files.cloudinary.storage.service.CloudinaryFileStorageService;
 import org.com.inkagob.procedureservice.infrastructure.persistence.jpa.repositories.ProcedureRepository;
 import org.com.inkagob.procedureservice.infrastructure.persistence.nosql.repositories.ProcedureNoSqlRepository;
 import org.com.inkagob.procedureservice.interfaces.rest.resources.ProcedureResource;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -25,9 +25,14 @@ public class ProcedureQueryServiceImpl implements ProcedureQueryService {
         this.procedureNoSqlRepository = procedureNoSqlRepository;
     }
 
+
+
+
+
     @Override
     public Optional<ProcedureResource> findById(Long procedureId) {
         var procedure = this.procedureRepository.findById(procedureId);
+
 
         if (procedure.isEmpty()) {
             return Optional.empty();
@@ -53,9 +58,21 @@ public class ProcedureQueryServiceImpl implements ProcedureQueryService {
     }
 
     @Override
-    public List<Procedure> findByCitizenId(int citizenId) {
-        return List.of();
+    public List<ProcedureResource> findByCitizenId(int citizenId) {
+        var procedures = this.procedureRepository.findByCitizenId(citizenId);
+        if (procedures == null || procedures.isEmpty()) {
+            return List.of();
+        }
+
+        return procedures.stream()
+                .map(proc -> {
+                    var doc = this.procedureNoSqlRepository.findById(proc.getProcedureNoSqlId());
+                    return ProcedureResource.from(proc, doc.orElse(null));
+                })
+                .collect(Collectors.toList());
     }
+
+
 
     @Override
     public List<Procedure> findByProcedureState(ProcedureState state) {

@@ -18,7 +18,7 @@ public interface ProcedureQueryService {
 
     List<Procedure> findAll();
 
-    List<Procedure> findByCitizenId(int citizenId);
+    List<ProcedureResource> findByCitizenId(int citizenId);
 
     List<Procedure> findByProcedureState(ProcedureState state);
 
