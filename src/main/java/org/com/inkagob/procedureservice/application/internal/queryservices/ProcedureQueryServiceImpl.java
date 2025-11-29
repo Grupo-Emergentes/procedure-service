@@ -58,7 +58,7 @@ public class ProcedureQueryServiceImpl implements ProcedureQueryService {
     }
 
     @Override
-    public List<ProcedureResource> findByCitizenId(int citizenId) {
+    public List<ProcedureResource> findByCitizenId(String citizenId) {
         var procedures = this.procedureRepository.findByCitizenId(citizenId);
         if (procedures == null || procedures.isEmpty()) {
             return List.of();
@@ -90,7 +90,7 @@ public class ProcedureQueryServiceImpl implements ProcedureQueryService {
     }
 
     @Override
-    public List<Procedure> findByCitizenIdAndProcedureState(int citizenId, ProcedureState state) {
+    public List<Procedure> findByCitizenIdAndProcedureState(String citizenId, ProcedureState state) {
         return List.of();
     }
 }

@@ -31,7 +31,7 @@ public class ProcedureCommandServiceImpl implements ProcedureCommandService {
     }
 
     @Override
-    public Optional<ImmutablePair<Procedure, ProcedureDocument>> handleCreateProcedure(CreateProcedureCommand command, int citizenId) {
+    public Optional<ImmutablePair<Procedure, ProcedureDocument>> handleCreateProcedure(CreateProcedureCommand command, String citizenId) {
         try {
             var procedure = new Procedure().ConstructProcedureFromCommand(command, citizenId);
             var savedProcedure = procedureRepository.save(procedure);

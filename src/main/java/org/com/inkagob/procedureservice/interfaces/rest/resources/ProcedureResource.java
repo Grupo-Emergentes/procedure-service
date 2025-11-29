@@ -12,7 +12,7 @@ import java.util.List;
 
 public record ProcedureResource(
         Long id,
-        int citizenId,
+        String citizenId,
         ProcedureType procedureType,
         ProcedureState procedureState,
 

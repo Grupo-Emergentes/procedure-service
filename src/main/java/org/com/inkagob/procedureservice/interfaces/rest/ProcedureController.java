@@ -46,7 +46,7 @@ public class ProcedureController {
     )
 
     public ResponseEntity<ProcedureResource> createProcedure(
-            @PathVariable int citizenId,
+            @PathVariable String citizenId,
             @RequestPart("data") String jsonData,
             @Parameter(description = "Archivos adjuntos", array = @ArraySchema(schema = @Schema(type = "string", format = "binary")))
             @RequestPart(value = "attachments", required = false) List<MultipartFile> attachments) throws JsonProcessingException {
@@ -94,7 +94,7 @@ public class ProcedureController {
             description = "Obtiene una lista de procedimientos asociados a un ID de ciudadano"
     )
     public ResponseEntity<List<ProcedureResource>> getProceduresByCitizenId(
-            @PathVariable int citizenId) {
+            @PathVariable String citizenId) {
         var procedures = procedureQueryService.findByCitizenId(citizenId);
         if (procedures.isEmpty()) {
             return ResponseEntity.noContent().build();

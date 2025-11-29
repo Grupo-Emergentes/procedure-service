@@ -16,7 +16,7 @@ import java.util.UUID;
 @Repository
 public interface ProcedureRepository extends JpaRepository<Procedure, Long> {
 
-    List<Procedure> findByCitizenId(int citizenId);
+    List<Procedure> findByCitizenId(String citizenId);
 
     Optional<Procedure> findByProcedureNoSqlId(String procedureNoSqlId);
 
@@ -24,7 +24,7 @@ public interface ProcedureRepository extends JpaRepository<Procedure, Long> {
 
     List<Procedure> findByProcedureType(ProcedureType procedureType);
 
-    List<Procedure> findByProcedureStateAndCitizenId(ProcedureState procedureState, int citizenId);
+    List<Procedure> findByProcedureStateAndCitizenId(ProcedureState procedureState, String citizenId);
 
     Page<Procedure> findAllByOrderByStartDateDesc(Pageable pageable);
 

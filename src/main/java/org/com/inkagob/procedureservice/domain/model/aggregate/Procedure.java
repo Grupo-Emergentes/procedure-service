@@ -24,7 +24,7 @@ public class Procedure {
     @GeneratedValue(strategy  = GenerationType.IDENTITY)
     private Long id;
 
-    private int citizenId;
+    private String citizenId;
 
     @Enumerated(EnumType.STRING)
     private ProcedureType procedureType;
@@ -46,7 +46,7 @@ public class Procedure {
     private int officialId;
 
 
-    public Procedure ConstructProcedureFromCommand(CreateProcedureCommand command, int citizenId) {
+    public Procedure ConstructProcedureFromCommand(CreateProcedureCommand command, String citizenId) {
         Procedure procedure = new Procedure();
         procedure.setCitizenId(citizenId);
         procedure.setProcedureType(ProcedureType.valueOf(command.procedureType().toUpperCase(java.util.Locale.ROOT)));

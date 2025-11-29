@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface ProcedureCommandService {
 
-    Optional<ImmutablePair<Procedure, ProcedureDocument>> handleCreateProcedure(CreateProcedureCommand command, int citizenId);
+    Optional<ImmutablePair<Procedure, ProcedureDocument>> handleCreateProcedure(CreateProcedureCommand command, String citizenId);
 
     Optional<ImmutablePair<Procedure, ProcedureDocument>> handleUpdateProcedure(UpdateProcedureCommand command, long procedureId);
 
